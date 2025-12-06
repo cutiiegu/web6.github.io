@@ -98,7 +98,7 @@
         
         <div class="form-group">
             <label for="count">Количество:</label>
-            <input type="number" id="count" min="1" value="1">
+            <input type="number" id="count" min="1" max="100" value="1">
         </div>
         
         <div class="form-group">
@@ -185,7 +185,17 @@
         }
 
         function calculateTotal() {
-            const count = parseInt(countInput.value) || 1;
+            let count = parseInt(countInput.value);
+            
+            if (isNaN(count) || count < 1) {
+                count = 1;
+                countInput.value = 1;
+            }
+            if (count > 100) {
+                count = 100;
+                countInput.value = 100;
+            }
+            
             const selectedService = document.querySelector('input[name="service"]:checked').value;
             
             let basePrice = servicePrices[selectedService];
